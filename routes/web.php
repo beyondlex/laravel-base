@@ -11,6 +11,8 @@
 |
 */
 
+use Illuminate\Support\Facades\Log;
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -26,12 +28,12 @@ Route::get('log', function (\Faker\Generator $faker) {
 //    ]);
 //    dd($db->get());
 
-    $log = new \App\Monolog();
-    $log->name = 'Robot 31';
-    $log->save();
+//    $log = new \App\Monolog();
+//    $log->name = 'Robot 31';
+//    $log->save();
 
 //    var_dump(app('request')->get('hi'));
-//    Log::notice($faker->name(), ['name'=>$faker->name()]);
+    Log::notice($faker->name(), ['name'=>$faker->name()]);
 
 });
 

@@ -41,6 +41,28 @@ $app->singleton(
     App\Exceptions\Handler::class
 );
 
+$app->configureMonologUsing(function($monolog){
+    /** @var \Monolog\Logger $monolog */
+    $monolog->pushHandler(new \App\Extensions\MongoDBHandler());
+    $monolog->pushProcessor(new \Monolog\Processor\IntrospectionProcessor(null,
+        [
+            'Illuminate\\Foundation\\Http\\Kernel',
+            'Illuminate\\Log',
+            'Illuminate\\Support\\Facades',
+        ]));
+    $monolog->pushProcessor(function($record) {
+        if ($req = app('request')->all()) {
+            $record['extra']['request'] = $req;
+        }
+        return $record;
+    });
+    $webProcessor = new \Monolog\Processor\WebProcessor();
+    $webProcessor->addExtraField('user_agent', 'HTTP_USER_AGENT');
+    $monolog->pushProcessor($webProcessor);
+    return $monolog;
+
+});
+
 /*
 |--------------------------------------------------------------------------
 | Return The Application
