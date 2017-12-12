@@ -37,6 +37,13 @@ Route::get('log', function (\Faker\Generator $faker) {
 
 });
 
+Route::group(['prefix'=>'api'], function () {
+    Route::group(['prefix'=>'logs'], function() {
+        Route::get('/', 'MonologController@getAll');
+    });
+});
+
+
 /** @var \Dingo\Api\Routing\Router $api */
 $api = app('Dingo\Api\Routing\Router');
 
