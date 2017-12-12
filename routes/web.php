@@ -15,6 +15,26 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('log', function (\Faker\Generator $faker) {
+//    $mongodb = \Illuminate\Support\Facades\DB::connection('mongodb');
+//    $db = $mongodb->collection('products');
+//    $db->insert([
+//        'name'=>'Robot 3178',
+//        'power'=>13098,
+//        'age'=>384,
+//        'birth_day'=>'2099-01-09',
+//    ]);
+//    dd($db->get());
+
+    $log = new \App\Monolog();
+    $log->name = 'Robot 31';
+    $log->save();
+
+//    var_dump(app('request')->get('hi'));
+//    Log::notice($faker->name(), ['name'=>$faker->name()]);
+
+});
+
 $api = app('Dingo\Api\Routing\Router');
 
 $api->version('v1', function ($api) {
