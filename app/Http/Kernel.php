@@ -2,7 +2,9 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\ApiAuthenticateMiddleware;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
+use Laravel\Passport\Http\Middleware\CheckClientCredentials;
 
 class Kernel extends HttpKernel
 {
@@ -57,5 +59,7 @@ class Kernel extends HttpKernel
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+        'api_auth'=>ApiAuthenticateMiddleware::class,
+        'client_credentials'=>CheckClientCredentials::class,
     ];
 }
