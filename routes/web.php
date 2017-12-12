@@ -37,12 +37,14 @@ Route::get('log', function (\Faker\Generator $faker) {
 
 });
 
+/** @var \Dingo\Api\Routing\Router $api */
 $api = app('Dingo\Api\Routing\Router');
 
 $api->version('v1', function ($api) {
 //    $api->get('/example/test', ['middleware'=>'auth'], 'App\Http\Controllers\ExampleController@test');
 //    $api->get('/example/test', /*['middleware'=>'api.auth'],*/ 'App\Http\Controllers\ExampleController@test');
 
+    /** @var \Dingo\Api\Routing\Router $api */
     $api->post('/test', \App\Http\Controllers\ExampleController::class.'@test');
 
     $api->get('test', function() {

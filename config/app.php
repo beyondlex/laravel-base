@@ -179,6 +179,7 @@ return [
 
         \Laravel\Passport\PassportServiceProvider::class,
         \Jenssegers\Mongodb\MongodbServiceProvider::class,
+        \Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
 
     ],
 
