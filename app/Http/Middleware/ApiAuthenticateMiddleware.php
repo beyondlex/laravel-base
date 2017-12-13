@@ -36,7 +36,8 @@ class ApiAuthenticateMiddleware
         asort($params);
         $str = '';
         foreach ($params as $k=>$v) {
-            $str .= $k.$v;
+            if (!$v) continue;
+            $str .= $k.'='.$v.';';
         }
         $str = $secret. $str;
         $sign = sha1($str);
