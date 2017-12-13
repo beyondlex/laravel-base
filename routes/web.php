@@ -37,11 +37,7 @@ Route::get('log', function (\Faker\Generator $faker) {
 
 });
 
-Route::group(['prefix'=>'api'], function () {
-    Route::group(['prefix'=>'logs'], function() {
-        Route::get('/', 'MonologController@getAll');
-    });
-});
+
 
 
 /** @var \Dingo\Api\Routing\Router $api */
@@ -52,6 +48,13 @@ $api->version('v1', function ($api) {
 //    $api->get('/example/test', /*['middleware'=>'api.auth'],*/ 'App\Http\Controllers\ExampleController@test');
 
     /** @var \Dingo\Api\Routing\Router $api */
+
+    $api->group(['prefix'=>'api'], function () use ($api) {
+        $api->group(['prefix'=>'logs'], function() use ($api) {
+            $api->get('/', \App\Http\Controllers\MonologController::class.'@getAll');
+        });
+    });
+
     $api->post('/test', \App\Http\Controllers\ExampleController::class.'@test');
 
     $api->get('test', function() {
@@ -60,9 +63,13 @@ $api->version('v1', function ($api) {
             'password' => ['required', 'min:7']
         ];
 
+        $messages = [
+            'username.required'=>'username 不能为空'
+        ];
+
         $payload = app('request')->only('username', 'password');
 
-        $validator = app('validator')->make($payload, $rules);
+        $validator = app('validator')->make($payload, $rules, $messages);
 
         if ($validator->fails()) {
             throw new Dingo\Api\Exception\StoreResourceFailedException('Could not create new user.', $validator->errors());
