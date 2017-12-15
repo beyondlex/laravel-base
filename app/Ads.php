@@ -5,8 +5,25 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Prettus\Repository\Contracts\Transformable;
 
+/**
+ * @property int client_id
+ * @property mixed file_id
+ * @property mixed id
+ * @property mixed s_time
+ * @property mixed e_time
+ * @property mixed duration
+ * @property mixed device
+ * @property mixed type
+ * @property Files file
+ */
 class Ads extends Model implements Transformable
 {
+
+
+	protected $fillable = [
+		'type', 'duration', 'device'
+	];
+
     public function file() {
         return $this->belongsTo(Files::class);
     }
@@ -24,6 +41,8 @@ class Ads extends Model implements Transformable
             's_time'=>$this->s_time,
             'e_time'=>$this->e_time,
             'duration'=>$this->duration,
+//			'device'=>$this->device,
+//			'type'=>$this->type,
         ];
     }
 }

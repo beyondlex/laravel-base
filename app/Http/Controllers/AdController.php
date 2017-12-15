@@ -2,23 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Repositories\AdRepository;
+use App\Services\AdService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Input;
 
 class AdController extends Controller
 {
     private $ad;
+    private $request;
 
-    public function __construct(AdRepository $ad)
+    public function __construct(AdService $ad, Request $request)
     {
         $this->ad = $ad;
+        $this->request = $request;
     }
 
     function all() {
-        $perPage = (int) (Input::get('perPage') ?? 5);
-        $data = $this->ad->paginate($perPage);
-        return $data;
+        return $this->ad->all();
     }
 
     function one($id) {
@@ -27,5 +26,8 @@ class AdController extends Controller
 
     function create() {
 
+        $ad = $this->request->get('ad');
+
+        return $this->ad->create($ad);
     }
 }

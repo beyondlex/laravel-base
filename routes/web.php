@@ -11,6 +11,7 @@
 |
 */
 
+use App\Http\Controllers\AdController;
 use Illuminate\Support\Facades\Log;
 
 Route::get('/', function () {
@@ -54,8 +55,9 @@ $api->version('v1', function ($api) {
             $api->get('/', \App\Http\Controllers\MonologController::class.'@getAll');
         });
 
-        $api->get('ads', \App\Http\Controllers\AdController::class.'@all');
-        $api->get('ads/{id}', \App\Http\Controllers\AdController::class.'@one');
+        $api->get('ads', AdController::class.'@all');
+        $api->get('ads/{id}', AdController::class.'@one');
+        $api->post('ads', AdController::class.'@create');
     });
 
     $api->post('/test', \App\Http\Controllers\ExampleController::class.'@test');
