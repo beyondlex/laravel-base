@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Support\Facades\Log;
 use Laravel\Passport\Client;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
@@ -33,7 +34,7 @@ class ApiAuthenticateMiddleware
 
         $params = $input;
         unset($params['sign']);
-        asort($params);
+        ksort($params);
         $str = '';
         foreach ($params as $k=>$v) {
             if (!$v) continue;
@@ -41,6 +42,8 @@ class ApiAuthenticateMiddleware
         }
         $str = $secret. $str;
         $sign = sha1($str);
+
+//        Log::debug('authentication', [$sign]);
 
         if ($sign != $input['sign']) {
             throw new UnauthorizedHttpException('Invalid request');
