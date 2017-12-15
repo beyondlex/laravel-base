@@ -3,7 +3,10 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Prettus\Repository\Contracts\Presentable;
+use Prettus\Repository\Contracts\PresenterInterface;
 use Prettus\Repository\Contracts\Transformable;
+use Prettus\Repository\Traits\PresentableTrait;
 
 /**
  * @property int client_id
@@ -16,9 +19,10 @@ use Prettus\Repository\Contracts\Transformable;
  * @property mixed type
  * @property Files file
  */
-class Ads extends Model implements Transformable
+class Ads extends Model implements Transformable, Presentable
 {
 
+	use PresentableTrait;
 
 	protected $fillable = [
 		'type', 'duration', 'device'
@@ -45,4 +49,6 @@ class Ads extends Model implements Transformable
 //			'type'=>$this->type,
         ];
     }
+
+
 }

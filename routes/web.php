@@ -58,6 +58,7 @@ $api->version('v1', function ($api) {
         $api->get('ads', AdController::class.'@all');
         $api->get('ads/{id}', AdController::class.'@one');
         $api->post('ads', AdController::class.'@create');
+        $api->put('ads/{id}', AdController::class.'@update');
     });
 
     $api->post('/test', \App\Http\Controllers\ExampleController::class.'@test');

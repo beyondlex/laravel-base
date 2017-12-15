@@ -32,15 +32,26 @@ class AdService {
         return $data;
     }
 
-    function create($ad) {
+    function create($data) {
         /** @var Files $file */
         $file = factory(Files::class)->create();//@todo
-        $ads = new Ads();
-        $ads->client_id = 1;//@todo
-        $ads->file_id = $file->id;
-		$ads->fill($ad);
-		$ads->save();
+        $ad = new Ads();
+        $ad->client_id = 1;//@todo
+        $ad->file_id = $file->id;
+		$ad->fill($data);
+		$ad->save();
 
-		return $this->ad->parserResult($ads);
+		return $this->ad->parserResult($ad);//Same as $ad->presenter()
     }
+
+    function update($id, $data) {
+    	/** @var Ads $ad */
+    	$ad = $this->ad->skipPresenter()->find($id);
+
+    	$ad->fill($data);
+    	$ad->save();
+
+    	return $ad->presenter();
+
+	}
 }

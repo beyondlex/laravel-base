@@ -26,8 +26,14 @@ class AdController extends Controller
 
     function create() {
 
-        $ad = $this->request->get('ad');
+    	//@todo validator
+        $data = $this->request->get('ad');
 
-        return $this->ad->create($ad);
+        return $this->ad->create($data);
     }
+
+    function update($id) {
+
+    	return $this->ad->update($id, $this->request->get('ad'));
+	}
 }
