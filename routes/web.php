@@ -55,6 +55,7 @@ $api->version('v1', function ($api) {
         });
 
         $api->get('ads', \App\Http\Controllers\AdController::class.'@all');
+        $api->get('ads/{id}', \App\Http\Controllers\AdController::class.'@one');
     });
 
     $api->post('/test', \App\Http\Controllers\ExampleController::class.'@test');

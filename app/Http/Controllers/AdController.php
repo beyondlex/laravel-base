@@ -8,11 +8,24 @@ use Illuminate\Support\Facades\Input;
 
 class AdController extends Controller
 {
-    //
+    private $ad;
 
-    function all(AdRepository $ad) {
+    public function __construct(AdRepository $ad)
+    {
+        $this->ad = $ad;
+    }
+
+    function all() {
         $perPage = (int) (Input::get('perPage') ?? 5);
-        $data = $ad->paginate($perPage);
+        $data = $this->ad->paginate($perPage);
         return $data;
+    }
+
+    function one($id) {
+        return $this->ad->find($id);
+    }
+
+    function create() {
+
     }
 }
