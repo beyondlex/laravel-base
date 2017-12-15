@@ -53,6 +53,8 @@ $api->version('v1', function ($api) {
         $api->group(['prefix'=>'logs'], function() use ($api) {
             $api->get('/', \App\Http\Controllers\MonologController::class.'@getAll');
         });
+
+        $api->get('ads', \App\Http\Controllers\AdController::class.'@all');
     });
 
     $api->post('/test', \App\Http\Controllers\ExampleController::class.'@test');
