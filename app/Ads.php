@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Prettus\Repository\Contracts\Presentable;
 use Prettus\Repository\Contracts\PresenterInterface;
 use Prettus\Repository\Contracts\Transformable;
@@ -23,6 +24,7 @@ class Ads extends Model implements Transformable, Presentable
 {
 
 	use PresentableTrait;
+	use SoftDeletes;
 
 	protected $fillable = [
 		'type', 'duration', 'device'

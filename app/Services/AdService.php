@@ -54,4 +54,8 @@ class AdService {
     	return $ad->presenter();
 
 	}
+
+	function delete($id) {
+    	return $this->ad->delete($id);
+	}
 }

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Services\AdService;
+use Dingo\Api\Exception\StoreResourceFailedException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class AdController extends Controller
 {
@@ -25,8 +27,17 @@ class AdController extends Controller
     }
 
     function create() {
+		$rules = [
+			'ad.duration'=>'required',
+		];
+		$messages = [
+			'ad.duration.required'=>'duration required',
+		];
+    	$validator = Validator::make($this->request->all(), $rules, $messages);
+    	if ($validator->fails()) {
+    		throw new StoreResourceFailedException('bad req', $validator->errors());
+		}
 
-    	//@todo validator
         $data = $this->request->get('ad');
 
         return $this->ad->create($data);
@@ -35,5 +46,11 @@ class AdController extends Controller
     function update($id) {
 
     	return $this->ad->update($id, $this->request->get('ad'));
+	}
+
+	function delete($id) {
+		if ($this->ad->delete($id)) {
+			return response('Deleted.', 204);
+		}
 	}
 }
