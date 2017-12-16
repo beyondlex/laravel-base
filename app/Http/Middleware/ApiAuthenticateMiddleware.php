@@ -18,7 +18,7 @@ class ApiAuthenticateMiddleware
      */
     public function handle($request, Closure $next)
     {
-        //client_id, params, sign
+		//client_id, params, sign
         $input = $request->input();
         if (!isset($input['client_id'])) {
             throw new UnauthorizedHttpException('Client_id can not be empty.');
@@ -48,6 +48,12 @@ class ApiAuthenticateMiddleware
         if ($sign != $input['sign']) {
             throw new UnauthorizedHttpException('Invalid request');
         }
+
+        \App::singleton('curato', function() use ($client) {
+			$curato = new \stdClass();
+			$curato->client = $client;
+			return $curato;
+		});
 
         return $next($request);
     }

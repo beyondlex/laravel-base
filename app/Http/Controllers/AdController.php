@@ -15,6 +15,7 @@ class AdController extends Controller
     {
         $this->ad = $ad;
         $this->request = $request;
+//		$this->middleware('api_auth');
     }
 
     function all() {

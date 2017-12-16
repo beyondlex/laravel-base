@@ -24,6 +24,8 @@ class ExampleController extends Controller
      * @return string
      */
     function test() {
-        return 'hi';
+    	$curato = app('curato');
+    	$client = $curato->client;
+    	return $client;
     }
 }
