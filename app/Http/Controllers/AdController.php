@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Services\AdService;
+use Dingo\Api\Exception\ResourceException;
 use Dingo\Api\Exception\StoreResourceFailedException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class AdController extends Controller
 {
@@ -30,13 +32,8 @@ class AdController extends Controller
 		$rules = [
 			'ad.duration'=>'required',
 		];
-		$messages = [
-			'ad.duration.required'=>'duration required',
-		];
-    	$validator = Validator::make($this->request->all(), $rules, $messages);
-    	if ($validator->fails()) {
-    		throw new StoreResourceFailedException('bad req', $validator->errors());
-		}
+
+		$this->validate($this->request, $rules);
 
         $data = $this->request->get('ad');
 
