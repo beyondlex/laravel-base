@@ -3,11 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Services\AdService;
-use Dingo\Api\Exception\ResourceException;
-use Dingo\Api\Exception\StoreResourceFailedException;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
-use Symfony\Component\HttpKernel\Exception\HttpException;
+use Illuminate\Support\Facades\Input;
 
 class AdController extends Controller
 {
@@ -21,7 +18,7 @@ class AdController extends Controller
     }
 
     function all() {
-        return $this->ad->all();
+        return $this->ad->paginate(Input::get('perPage'));
     }
 
     function one($id) {

@@ -11,7 +11,6 @@ namespace App\Services;
 use App\Ads;
 use App\Files;
 use App\Repositories\AdRepository;
-use Illuminate\Support\Facades\Input;
 
 class AdService {
 
@@ -22,15 +21,19 @@ class AdService {
         $this->ad = $ad;
     }
 
+    function all() {
+    	return $this->ad->all();
+	}
+
     function find($id) {
         return $this->ad->find($id);
     }
 
-    function all() {
-        $perPage = (int) (Input::get('perPage') ?? 5);//@todo
-        $data = $this->ad->paginate($perPage);
-        return $data;
-    }
+    function paginate($perPage) {
+    	$perPage = $perPage ?? 5;
+		$data = $this->ad->paginate($perPage);
+		return $data;
+	}
 
     function create($data) {
         /** @var Files $file */
