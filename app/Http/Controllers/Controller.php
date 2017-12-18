@@ -20,14 +20,18 @@ class Controller extends BaseController
 	{
 		$request = app('request');
 		$bearerToken=$request->bearerToken();
-		$tokenId= (new Parser())->parse($bearerToken)->getHeader('jti');
-		$client = Token::find($tokenId)->client;
 
-		\App::singleton('curato', function() use ($client) {
-			$curato = new \stdClass();
-			$curato->client = $client;
-			return $curato;
-		});
+		if ($bearerToken) {
+			$tokenId= (new Parser())->parse($bearerToken)->getHeader('jti');
+			$client = Token::find($tokenId)->client;
+
+			\App::singleton('curato', function() use ($client) {
+				$curato = new \stdClass();
+				$curato->client = $client;
+				return $curato;
+			});
+		}
+
 	}
 
 	public function validate(Request $request, array $rules,
