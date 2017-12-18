@@ -15,7 +15,7 @@ class AdController extends Controller
     {
         $this->ad = $ad;
         $this->request = $request;
-		$this->middleware('api_auth');
+		$this->middleware('client_credentials')->only(['create', 'update', 'delete']);
     }
 
     function all() {
@@ -41,7 +41,7 @@ class AdController extends Controller
 
     function update($id) {
 
-    	return $this->ad->update($id, $this->request->get('ad'));
+    	return $this->ad->update($id, $this->request->only(['duration']));
 	}
 
 	function delete($id) {
