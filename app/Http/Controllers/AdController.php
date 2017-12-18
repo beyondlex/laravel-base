@@ -13,6 +13,8 @@ class AdController extends Controller
 
     public function __construct(AdService $ad, Request $request)
     {
+    	parent::__construct();
+
         $this->ad = $ad;
         $this->request = $request;
 		$this->middleware('client_credentials')->only(['create', 'update', 'delete']);
