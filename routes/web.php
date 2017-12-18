@@ -38,7 +38,21 @@ Route::get('log', function (\Faker\Generator $faker) {
 
 });
 
-
+Route::post('file', function() {
+//	echo asset('storage/file.txt');
+	$request = app('request');
+	dd(pathinfo($request->file('file')->getClientOriginalName()));
+//	Storage::disk('public')->put('file.txt', 'hello');
+	$path = $request->file('file')->store('avatar', 'public');
+	return [
+		Storage::disk('public')->size($path),
+		Storage::disk('public')->mimeType($path),
+		$path,
+	];
+//	$path = Storage::disk('public')->putFile('dir', $request->file('file'));
+//	return $path;
+//	Storage::disk('public')->move('dir/GQytEX649pi6AlRPPJetBhc6JrVbpM0pGBdMXATW.jpeg', 'avatar/1.jpeg');
+});
 
 
 /** @var \Dingo\Api\Routing\Router $api */

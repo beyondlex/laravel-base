@@ -15,4 +15,8 @@ class Files extends Model
     use UuidForKey;
     //
 
+	protected $fillable = [
+		'filename', 'type', 'size', 'url',
+	];
+
 }

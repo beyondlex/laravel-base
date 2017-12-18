@@ -43,7 +43,7 @@ class Ads extends Model implements Transformable, Presentable
         return [
             'id'=>$this->id,
             'file_name'=>$this->file->filename,
-            'url'=>$this->file->url,
+            'url'=> "http://{$_SERVER['HTTP_HOST']}". $this->file->url,
             's_time'=>$this->s_time,
             'e_time'=>$this->e_time,
             'duration'=>$this->duration,

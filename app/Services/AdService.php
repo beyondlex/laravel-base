@@ -15,10 +15,12 @@ use App\Repositories\AdRepository;
 class AdService {
 
     private $ad;
+    private $fileService;
 
-    public function __construct(AdRepository $ad)
+    public function __construct(AdRepository $ad, FileService $fileService)
     {
         $this->ad = $ad;
+        $this->fileService = $fileService;
     }
 
     function all() {
@@ -37,9 +39,12 @@ class AdService {
 
     function create($data) {
         /** @var Files $file */
-        $file = factory(Files::class)->create();//@todo
+//        $file = factory(Files::class)->create();
+		$curato = app('curato');// Initial at the ApiAuthenticationMiddleware
+		$file = $this->fileService->store('ads');// Storing to directory: public/ads
         $ad = new Ads();
-        $ad->client_id = 1;//@todo
+//        $ad->client_id = 1;
+		$ad->client_id = $curato->client->id;
         $ad->file_id = $file->id;
 		$ad->fill($data);
 		$ad->save();

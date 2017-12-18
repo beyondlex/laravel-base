@@ -15,7 +15,7 @@ class AdController extends Controller
     {
         $this->ad = $ad;
         $this->request = $request;
-//		$this->middleware('api_auth');
+		$this->middleware('api_auth');
     }
 
     function all() {
@@ -28,12 +28,13 @@ class AdController extends Controller
 
     function create() {
 		$rules = [
-			'ad.duration'=>'required',
+			'duration'=>'required',
+			'file'=>'required',
 		];
 
 		$this->validate($this->request, $rules);
 
-        $data = $this->request->get('ad');
+        $data = $this->request->only(['duration']);
 
         return $this->ad->create($data);
     }

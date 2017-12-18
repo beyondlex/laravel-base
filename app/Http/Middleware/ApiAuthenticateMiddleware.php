@@ -20,10 +20,12 @@ class ApiAuthenticateMiddleware
     {
 		//client_id, params, sign
         $input = $request->input();
-        if (!isset($input['client_id'])) {
+        $clientId = $request->header('clientId');
+        $sign = $request->header('sign');
+        if (!isset($clientId)) {
             throw new UnauthorizedHttpException('Client_id can not be empty.');
         }
-        $client = Client::find($input['client_id']);
+        $client = Client::find($clientId);
         if (!$client) {
             throw new UnauthorizedHttpException('Invalid client.');
         }
@@ -33,19 +35,20 @@ class ApiAuthenticateMiddleware
         $secret = $client->secret;
 
         $params = $input;
-        unset($params['sign']);
+//        unset($params['sign']);
         ksort($params);
         $str = '';
         foreach ($params as $k=>$v) {
             if (!$v) continue;
+            if (!is_string($v)) continue;
             $str .= $k.'='.$v.';';
         }
         $str = $secret. $str;
-        $sign = sha1($str);
+        $signExpect = sha1($str);
 
 //        Log::debug('authentication', [$sign]);
 
-        if ($sign != $input['sign']) {
+        if ($signExpect != $sign) {
             throw new UnauthorizedHttpException('Invalid request');
         }
 
