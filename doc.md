@@ -133,10 +133,14 @@ output:
         + id: 1 (number, optional) - 人脸库分组ID
         + display_name: baidu (string, required) - 人脸库显示名称
         
++ Response 200
+        
 ### 人脸库详情 [GET /api/faceset/{id}]
 
 + Parameters
     + id: `1` (number, required) - 人脸库分组ID
+    
++ Response 200
     
 ### 删除人脸库 [DELETE /api/faceset/{id}]
 
@@ -197,7 +201,7 @@ output:
         + file: `一个文件` (string, optional) - 图片文件
         + url: `http://host/file.jpg` (string, optional) - 图片url
 
-+ Response
++ Response 200
     + Attributes
         + data (SignIn)
         
@@ -211,6 +215,8 @@ output:
         + address (string, optional)
         + position (string, optional)
         + remark (string, optional)
+        
++ Response 204
 
 # Data Structures
 
