@@ -11,6 +11,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Passport\Token;
 use Lcobucci\JWT\Parser;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
 class Controller extends BaseController
 {
@@ -23,7 +24,9 @@ class Controller extends BaseController
 
 		if ($bearerToken) {
 			$tokenId= (new Parser())->parse($bearerToken)->getHeader('jti');
-			$client = Token::find($tokenId)->client;
+			$token = Token::find($tokenId);
+			if (!$token) throw new UnauthorizedHttpException('authenticate failed');
+			$client = $token->client;
 
 			\App::singleton('curato', function() use ($client) {
 				$curato = new \stdClass();

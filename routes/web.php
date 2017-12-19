@@ -57,6 +57,12 @@ $api->version('v1', function ($api) {
 
 });
 
+////多媒体广告
+//Route::get('/api/ads', function() {return 'hi';});//列表
+//Route::get('/api/ads/{id}', 'AdController@one');//详情
+//Route::post('/api/ads', 'AdController@create');//新增
+//Route::put('/api/ads/{id}', 'AdController@update');//更新
+//Route::delete('/api/ads/{id}', 'AdController@delete');//删除
 
 Route::get('log', function (\Faker\Generator $faker) {
 	//    $mongodb = \Illuminate\Support\Facades\DB::connection('mongodb');
