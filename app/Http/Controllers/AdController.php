@@ -32,11 +32,13 @@ class AdController extends Controller
 		$rules = [
 			'duration'=>'required',
 			'file'=>'required',
+			's_time'=>'date',
+			'e_time'=>'date|after:s_time',
 		];
 
 		$this->validate($this->request, $rules);
 
-        $data = $this->request->only(['duration']);
+        $data = $this->request->only(['duration', 's_time', 'e_time']);
 
         return $this->ad->create($data);
     }

@@ -27,7 +27,7 @@ class Ads extends Model implements Transformable, Presentable
 	use SoftDeletes;
 
 	protected $fillable = [
-		'type', 'duration', 'device'
+		'type', 'duration', 'device', 's_time', 'e_time'
 	];
 
     public function file() {

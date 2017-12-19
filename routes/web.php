@@ -12,6 +12,7 @@
 */
 
 use App\Http\Controllers\AdController;
+use App\Http\Controllers\FaceController;
 use Illuminate\Support\Facades\Log;
 
 Route::get('/', function () {
@@ -69,32 +70,41 @@ $api->version('v1', function ($api) {
             $api->get('/', \App\Http\Controllers\MonologController::class.'@getAll');
         });
 
-        $api->get('ads', AdController::class.'@all');
-        $api->get('ads/{id}', AdController::class.'@one');
-        $api->post('ads', AdController::class.'@create');
-        $api->put('ads/{id}', AdController::class.'@update');
-        $api->delete('ads/{id}', AdController::class.'@delete');
+        //多媒体广告
+        $api->get('ads', AdController::class.'@all');//列表
+        $api->get('ads/{id}', AdController::class.'@one');//详情
+        $api->post('ads', AdController::class.'@create');//新增
+        $api->put('ads/{id}', AdController::class.'@update');//更新
+        $api->delete('ads/{id}', AdController::class.'@delete');//删除
+
+		//人脸
+        $api->post('faceset', FaceController::class.'@createFaceSet');//创建人脸库
+		$api->delete('faceset/{id}', FaceController::class.'@deleteFaceSet');//删除人脸库
+		$api->get('faceset/{id}', FaceController::class.'@faceSet');//人脸库详情
+		$api->post('faceset/{id}/face', FaceController::class.'@addFace');//添加人脸数据
+		$api->delete('faceset/{id}/face/{face_oken}', FaceController::class.'@removeFace');//抹除人脸数据
+        $api->post('faceset/{id}/actions/search', FaceController::class.'@searchFace');//匹配人脸
     });
 
-    $api->post('/test', \App\Http\Controllers\ExampleController::class.'@test');
+//    $api->post('/test', \App\Http\Controllers\ExampleController::class.'@test');
 
-    $api->get('test', function() {
-        $rules = [
-            'username' => ['required', 'alpha'],
-            'password' => ['required', 'min:7']
-        ];
-
-        $messages = [
-            'username.required'=>'username 不能为空'
-        ];
-
-        $payload = app('request')->only('username', 'password');
-
-        $validator = app('validator')->make($payload, $rules, $messages);
-
-        if ($validator->fails()) {
-            throw new Dingo\Api\Exception\StoreResourceFailedException('Could not create new user.', $validator->errors());
-        }
-
-    });
+//    $api->get('test', function() {
+//        $rules = [
+//            'username' => ['required', 'alpha'],
+//            'password' => ['required', 'min:7']
+//        ];
+//
+//        $messages = [
+//            'username.required'=>'username 不能为空'
+//        ];
+//
+//        $payload = app('request')->only('username', 'password');
+//
+//        $validator = app('validator')->make($payload, $rules, $messages);
+//
+//        if ($validator->fails()) {
+//            throw new Dingo\Api\Exception\StoreResourceFailedException('Could not create new user.', $validator->errors());
+//        }
+//
+//    });
 });
