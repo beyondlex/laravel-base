@@ -1,12 +1,15 @@
 <?php
 namespace App\Services;
 
+use App\Exceptions\Traits\ClientTrait;
 use Dingo\Api\Exception\ResourceException;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class FaceService {
+
+	use ClientTrait;
 
 	private $key, $secret;
 	private $baseUrl = 'https://api-cn.faceplusplus.com/facepp/v3/';
@@ -22,11 +25,7 @@ class FaceService {
 
 	function dataInit() {
 		$faceConfig = config('application.face');
-		$curato = app('curato');
-		$clientId = $curato->client->id;
-		if (!isset($clientId, $faceConfig)) {
-			throw new BadRequestHttpException('client error');
-		}
+		$clientId = $this->getClientId();
 		$this->key = $faceConfig[$clientId]['api_key'];
 		$this->secret = $faceConfig[$clientId]['api_secret'];
 		$this->outerIdPrefix = $faceConfig[$clientId]['faceset_code'];

@@ -61,6 +61,13 @@ output:
     + perPage: `5` (number, optional) - 每页显示条数
         + Default: `5`
         
+        
++ Request
+    + Headers
+        
+                client_id: 1
+                sign: r1fdz 
+                
 + Response 200
     + Attributes
         + data (Ads)
@@ -70,13 +77,11 @@ output:
 ### 新增多媒体 [POST /api/ads]
 
 + Request
-
     + Headers
-    
-            client_id: 1
-            sign: r1fdz 
-
-+ Request with body
+        
+                client_id: 1
+                sign: r1fdz 
+                
     + Attributes
         + duration: 10 (number, optional) 
     
@@ -90,6 +95,14 @@ output:
 
 + Parameters
     + id: `1` (number, required) - 多媒体ID
+        
+        
++ Request
+    + Headers
+        
+                client_id: 1
+                sign: r1fdz 
+              
     
 + Response 200
     + Attributes
@@ -103,9 +116,13 @@ output:
     + id: `1` (number, required) - 多媒体ID
     
 + Request
+
+    + Headers
+            
+                    client_id: 1
+                    sign: r1fdz 
+                    
     + Attributes
-        + client_id: 1 (number, required)
-        + sign: r1fdz (string, required)
         + ad
             + duration: 10 (number, optional) 
     
@@ -118,6 +135,15 @@ output:
 
 + Parameters
     + id: `1` (number, required) - 多媒体ID
+    
+        
+        
++ Request
+    + Headers
+        
+                client_id: 1
+                sign: r1fdz 
+              
 
 + Response 204
 
@@ -129,6 +155,12 @@ output:
 ### 新增人脸库 [POST /api/faceset]
 
 + Request 
+
+    + Headers
+        
+                client_id: 1
+                sign: r1fdz 
+              
     + Attributes
         + id: 1 (number, optional) - 人脸库分组ID
         + display_name: baidu (string, required) - 人脸库显示名称
@@ -139,6 +171,14 @@ output:
 
 + Parameters
     + id: `1` (number, required) - 人脸库分组ID
+        
+        
++ Request
+    + Headers
+        
+                client_id: 1
+                sign: r1fdz 
+              
     
 + Response 200
     
@@ -146,6 +186,14 @@ output:
 
 + Parameters
     + id: `1` (number, required) - 人脸库分组ID
+        
+        
++ Request
+    + Headers
+        
+                client_id: 1
+                sign: r1fdz 
+              
     
 + Response 204
     
@@ -155,8 +203,14 @@ output:
 
 + Parameters
     + id: `1` (number, required) - 人脸库分组ID
-    
+        
+        
 + Request
+    + Headers
+        
+                client_id: 1
+                sign: r1fdz 
+              
     + Attributes
         + user_id: 2 (number, required)
         + file: `一个文件` (string, optional) - 人脸图片文件
@@ -169,6 +223,13 @@ output:
 + Parameters
     + id: `1` (number, required) - 人脸库分组ID
     + face_token: abc (string, required) - face token
+        
++ Request
+    + Headers
+        
+                client_id: 1
+                sign: r1fdz 
+              
     
 + Response 204
 
@@ -177,7 +238,13 @@ output:
 ## 签到 [/api/signin/{id}]
 
 ## 签到列表 [GET /api/signin]
-
+        
++ Request
+    + Headers
+        
+                client_id: 1
+                sign: r1fdz 
+        
 + Response 200 
     + Attributes
         + data (SignInList)
@@ -188,14 +255,25 @@ output:
 
 + Parameters
     + id: `2` (number, required) - 签到ID
-    
+        
++ Request
+    + Headers
+        
+                client_id: 1
+                sign: r1fdz 
+           
 + Response 200 
     + Attributes
         + data (SignIn)
         
 ## 写入签到数据 [POST /api/signin]
-
+  
 + Request
+    + Headers
+        
+                client_id: 1
+                sign: r1fdz 
+        
     + Attributes
         + sign_in_type: 1 (number, required) - 签到类型
         + file: `一个文件` (string, optional) - 图片文件
@@ -209,8 +287,13 @@ output:
 
 + Parameters
     + id: `2` (number, required) - 签到ID
-    
+        
 + Request
+    + Headers
+        
+                client_id: 1
+                sign: r1fdz 
+
     + Attributes
         + address (string, optional)
         + position (string, optional)
