@@ -25,12 +25,14 @@ class FileService {
 	 * @param string $path	Relative path. eg: 'avatar/sub_dir'
 	 * @param string $disk	eg: public, local ...
 	 * @param string $inputKey The key of file post in the form.
-	 * @return Files
+	 * @return Files|bool
 	 */
 	public function store($path, $disk = 'public', $inputKey = 'file') {
 		$request = app('request');
 		/** @var UploadedFile $uploadedFile */
 		$uploadedFile = $request->file($inputKey);
+
+		if (!$uploadedFile) return false;
 
 		$fileSystem = Storage::disk($disk);
 		$path = $fileSystem->putFile($path, $uploadedFile);

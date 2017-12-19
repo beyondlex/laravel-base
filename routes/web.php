@@ -13,46 +13,11 @@
 
 use App\Http\Controllers\AdController;
 use App\Http\Controllers\FaceController;
+use App\Http\Controllers\SignInController;
 use Illuminate\Support\Facades\Log;
 
 Route::get('/', function () {
     return view('welcome');
-});
-
-Route::get('log', function (\Faker\Generator $faker) {
-//    $mongodb = \Illuminate\Support\Facades\DB::connection('mongodb');
-//    $db = $mongodb->collection('products');
-//    $db->insert([
-//        'name'=>'Robot 3178',
-//        'power'=>13098,
-//        'age'=>384,
-//        'birth_day'=>'2099-01-09',
-//    ]);
-//    dd($db->get());
-
-//    $log = new \App\Monolog();
-//    $log->name = 'Robot 31';
-//    $log->save();
-
-//    var_dump(app('request')->get('hi'));
-    Log::notice($faker->name(), ['name'=>$faker->name()]);
-
-});
-
-Route::post('file', function() {
-//	echo asset('storage/file.txt');
-	$request = app('request');
-	dd(pathinfo($request->file('file')->getClientOriginalName()));
-//	Storage::disk('public')->put('file.txt', 'hello');
-	$path = $request->file('file')->store('avatar', 'public');
-	return [
-		Storage::disk('public')->size($path),
-		Storage::disk('public')->mimeType($path),
-		$path,
-	];
-//	$path = Storage::disk('public')->putFile('dir', $request->file('file'));
-//	return $path;
-//	Storage::disk('public')->move('dir/GQytEX649pi6AlRPPJetBhc6JrVbpM0pGBdMXATW.jpeg', 'avatar/1.jpeg');
 });
 
 
@@ -60,8 +25,6 @@ Route::post('file', function() {
 $api = app('Dingo\Api\Routing\Router');
 
 $api->version('v1', function ($api) {
-//    $api->get('/example/test', ['middleware'=>'auth'], 'App\Http\Controllers\ExampleController@test');
-//    $api->get('/example/test', /*['middleware'=>'api.auth'],*/ 'App\Http\Controllers\ExampleController@test');
 
     /** @var \Dingo\Api\Routing\Router $api */
 
@@ -84,27 +47,33 @@ $api->version('v1', function ($api) {
 		$api->post('faceset/{id}/face', FaceController::class.'@addFace');//添加人脸数据
 		$api->delete('faceset/{id}/face/{face_oken}', FaceController::class.'@removeFace');//抹除人脸数据
         $api->post('faceset/{id}/actions/search', FaceController::class.'@searchFace');//匹配人脸
+
+		//签到
+		$api->post('signin', SignInController::class.'@signIn');//签到
+		$api->get('signin', SignInController::class.'@getSignInList');//签到列表
+		$api->get('signin/{id}', SignInController::class.'@getSignInInfo');//签到详情
+		$api->put('signin/{id}', SignInController::class.'@updateSignInInfo');//更新签到
     });
 
-//    $api->post('/test', \App\Http\Controllers\ExampleController::class.'@test');
+});
 
-//    $api->get('test', function() {
-//        $rules = [
-//            'username' => ['required', 'alpha'],
-//            'password' => ['required', 'min:7']
-//        ];
-//
-//        $messages = [
-//            'username.required'=>'username 不能为空'
-//        ];
-//
-//        $payload = app('request')->only('username', 'password');
-//
-//        $validator = app('validator')->make($payload, $rules, $messages);
-//
-//        if ($validator->fails()) {
-//            throw new Dingo\Api\Exception\StoreResourceFailedException('Could not create new user.', $validator->errors());
-//        }
-//
-//    });
+
+Route::get('log', function (\Faker\Generator $faker) {
+	//    $mongodb = \Illuminate\Support\Facades\DB::connection('mongodb');
+	//    $db = $mongodb->collection('products');
+	//    $db->insert([
+	//        'name'=>'Robot 3178',
+	//        'power'=>13098,
+	//        'age'=>384,
+	//        'birth_day'=>'2099-01-09',
+	//    ]);
+	//    dd($db->get());
+
+	//    $log = new \App\Monolog();
+	//    $log->name = 'Robot 31';
+	//    $log->save();
+
+	//    var_dump(app('request')->get('hi'));
+	Log::notice($faker->name(), ['name'=>$faker->name()]);
+
 });
