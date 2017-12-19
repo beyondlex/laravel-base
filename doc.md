@@ -4,50 +4,40 @@ FORMAT: 1A
 
 ## Authentication
 
-请求签名算法：
+使用OAuth2.0的client credentials方式进行认证。
 
-对参数名按升序排序，去掉空值的键值对后按key1=value1;key2=value2...的形式拼接成字符串，
-然后将client_secret拼接到字符串的前面并进行sha1加密得到sign
+请求token发放接口传入client_id, client_secret 获得 access_token
 
-请求：
-将上一步得到的sign，与client_id一并放到header里发起请求
+后续需要认证的请求将access_token放到header中进行认证：
 
-**header:** 
+**HTTP header:**
 
-client_id: xxx
-
-sign: xxx
-
-**body:**
-
-key1: value1
-
-key2: value2
-
-:::note 
-
-如：
-
-请求参数为name=lex&age=18&gender=M&client_id=2&sign=5423b7a64dd4e41841fb41a0afbe4469c056a1b8
-
-对参数名按升序排序：age=18&client_id=2&gender=M&name=lex
-
-拼接后：age=18;client_id=2;gender=M;name=lex;
-
-若client_secret=hello
-
-则sha1加密后：
-```php
-sign = sha1('helloage=18;client_id=2;gender=M;name=lex;')
+```
+Authorization: Bearer {{access_token}}
 ```
 
-output:
-```bash
-5423b7a64dd4e41841fb41a0afbe4469c056a1b8
-```
 
+# Group token
+
+获取access_token 以供后续请求认证
+
+## 请求token [/oauth/token]
+
+### 获取access_token [POST /oauth/token]
+
+::: warning
+grant_type 需传入值：`client_credentials`
 :::
 
++ Request
+    + Attributes
+        + client_id: 2 (number, required)
+        + client_secret: `1fb29dd` (string, required)
+        + grant_type: `client credentials` (string, required)
+            + default: `client_credentials`
+
++ Response 200
+    + Attributes (Token)
 
 # Group Ads
 多媒体广告
@@ -65,8 +55,7 @@ output:
 + Request
     + Headers
         
-                client_id: 1
-                sign: r1fdz 
+            Authorization: Bearer {{access_token}}
                 
 + Response 200
     + Attributes
@@ -79,11 +68,12 @@ output:
 + Request
     + Headers
         
-                client_id: 1
-                sign: r1fdz 
-                
+            Authorization: Bearer {{access_token}}
+                 
     + Attributes
         + duration: 10 (number, optional) 
+        + s_time: `2017-10-01 00:00:59` (string, optional)
+        + e_time: `2017-10-03 00:00:59` (string, optional)
     
 + Response 200
     + Attributes
@@ -100,9 +90,7 @@ output:
 + Request
     + Headers
         
-                client_id: 1
-                sign: r1fdz 
-              
+            Authorization: Bearer {{access_token}}        
     
 + Response 200
     + Attributes
@@ -116,12 +104,10 @@ output:
     + id: `1` (number, required) - 多媒体ID
     
 + Request
-
     + Headers
-            
-                    client_id: 1
-                    sign: r1fdz 
-                    
+        
+            Authorization: Bearer {{access_token}}
+                      
     + Attributes
         + ad
             + duration: 10 (number, optional) 
@@ -136,15 +122,11 @@ output:
 + Parameters
     + id: `1` (number, required) - 多媒体ID
     
-        
-        
 + Request
     + Headers
         
-                client_id: 1
-                sign: r1fdz 
-              
-
+            Authorization: Bearer {{access_token}}
+       
 + Response 204
 
 
@@ -154,12 +136,10 @@ output:
 
 ### 新增人脸库 [POST /api/faceset]
 
-+ Request 
-
++ Request
     + Headers
         
-                client_id: 1
-                sign: r1fdz 
+            Authorization: Bearer {{access_token}}
               
     + Attributes
         + id: 1 (number, optional) - 人脸库分组ID
@@ -172,14 +152,11 @@ output:
 + Parameters
     + id: `1` (number, required) - 人脸库分组ID
         
-        
 + Request
     + Headers
         
-                client_id: 1
-                sign: r1fdz 
-              
-    
+            Authorization: Bearer {{access_token}}
+       
 + Response 200
     
 ### 删除人脸库 [DELETE /api/faceset/{id}]
@@ -187,14 +164,11 @@ output:
 + Parameters
     + id: `1` (number, required) - 人脸库分组ID
         
-        
 + Request
     + Headers
         
-                client_id: 1
-                sign: r1fdz 
-              
-    
+            Authorization: Bearer {{access_token}}
+       
 + Response 204
     
 ## 人脸数据 [/api/faceset/{id}/face/{face_token}/]
@@ -203,14 +177,12 @@ output:
 
 + Parameters
     + id: `1` (number, required) - 人脸库分组ID
-        
-        
+           
 + Request
     + Headers
         
-                client_id: 1
-                sign: r1fdz 
-              
+            Authorization: Bearer {{access_token}}
+       
     + Attributes
         + user_id: 2 (number, required)
         + file: `一个文件` (string, optional) - 人脸图片文件
@@ -227,9 +199,8 @@ output:
 + Request
     + Headers
         
-                client_id: 1
-                sign: r1fdz 
-              
+            Authorization: Bearer {{access_token}}
+             
     
 + Response 204
 
@@ -242,8 +213,7 @@ output:
 + Request
     + Headers
         
-                client_id: 1
-                sign: r1fdz 
+            Authorization: Bearer {{access_token}}
         
 + Response 200 
     + Attributes
@@ -259,9 +229,8 @@ output:
 + Request
     + Headers
         
-                client_id: 1
-                sign: r1fdz 
-           
+            Authorization: Bearer {{access_token}}
+       
 + Response 200 
     + Attributes
         + data (SignIn)
@@ -271,9 +240,8 @@ output:
 + Request
     + Headers
         
-                client_id: 1
-                sign: r1fdz 
-        
+            Authorization: Bearer {{access_token}}
+       
     + Attributes
         + sign_in_type: 1 (number, required) - 签到类型
         + file: `一个文件` (string, optional) - 图片文件
@@ -291,9 +259,8 @@ output:
 + Request
     + Headers
         
-                client_id: 1
-                sign: r1fdz 
-
+            Authorization: Bearer {{access_token}}
+       
     + Attributes
         + address (string, optional)
         + position (string, optional)
@@ -344,3 +311,8 @@ output:
   + links
     + prev: /api/logs?perPage=2&page=1 (string)
     + next: /api/logs?perPage=2&page=3 (string)
+    
+## Token
+  + token_type: Bearer (string)
+  + expire_in: 31536000 (number)
+  + access_token: `eyJ0e.eyJhdWQ.TjOOjx6kdPxc` (string)
