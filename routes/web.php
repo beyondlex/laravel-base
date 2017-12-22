@@ -12,6 +12,8 @@
 */
 
 use App\Http\Controllers\AdController;
+use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\FaceController;
 use App\Http\Controllers\SignInController;
 use Illuminate\Support\Facades\Log;
@@ -53,6 +55,24 @@ $api->version('v1', function ($api) {
 		$api->get('signin', SignInController::class.'@getSignInList');//签到列表
 		$api->get('signin/{id}', SignInController::class.'@getSignInInfo');//签到详情
 		$api->put('signin/{id}', SignInController::class.'@updateSignInInfo');//更新签到
+
+		//company
+		$api->post('companies', CompanyController::class.'@create');
+		$api->get('companies', CompanyController::class.'@all');
+		$api->get('companies/{id}', CompanyController::class.'@find');
+		$api->put('companies/{id}', CompanyController::class.'@update');
+		$api->delete('companies/{id}', CompanyController::class.'@delete');
+
+		//department
+		$api->post('departments', DepartmentController::class.'@create');
+		$api->get('departments', DepartmentController::class.'@all');
+		$api->get('departments/{id}', DepartmentController::class.'@find');
+		$api->put('departments/{id}', DepartmentController::class.'@update');
+		$api->delete('departments/{id}', DepartmentController::class.'@delete');
+
+
+
+
     });
 
 });

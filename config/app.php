@@ -181,6 +181,8 @@ return [
         \Jenssegers\Mongodb\MongodbServiceProvider::class,
         \Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
 
+//		\Baum\Providers\BaumServiceProvider::class,
+
     ],
 
     /*
