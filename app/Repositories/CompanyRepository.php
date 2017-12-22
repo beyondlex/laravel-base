@@ -10,7 +10,6 @@ namespace App\Repositories;
 
 
 use App\Models\Company;
-use Prettus\Repository\Presenter\ModelFractalPresenter;
 
 class CompanyRepository extends Repository
 {
@@ -24,8 +23,4 @@ class CompanyRepository extends Repository
 		return Company::class;
 	}
 
-	public function presenter()
-	{
-		return ModelFractalPresenter::class;
-	}
 }

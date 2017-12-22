@@ -15,6 +15,7 @@ use App\Http\Controllers\AdController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\FaceController;
+use App\Http\Controllers\LevelController;
 use App\Http\Controllers\SignInController;
 use Illuminate\Support\Facades\Log;
 
@@ -69,6 +70,13 @@ $api->version('v1', function ($api) {
 		$api->get('departments/{id}', DepartmentController::class.'@find');
 		$api->put('departments/{id}', DepartmentController::class.'@update');
 		$api->delete('departments/{id}', DepartmentController::class.'@delete');
+
+		//level
+		$api->post('levels', LevelController::class.'@create');
+		$api->get('levels', LevelController::class.'@all');
+		$api->get('levels/{id}', LevelController::class.'@find');
+		$api->put('levels/{id}', LevelController::class.'@update');
+		$api->delete('levels/{id}', LevelController::class.'@delete');
 
 
 

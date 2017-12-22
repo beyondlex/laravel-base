@@ -9,9 +9,9 @@
 namespace App\Repositories;
 
 
-use App\Models\Department;
+use App\Models\Level;
 
-class DepartmentRepository extends Repository
+class LevelRepository extends Repository
 {
 
 
@@ -22,16 +22,16 @@ class DepartmentRepository extends Repository
 	 */
 	public function model()
 	{
-		return Department::class;
+		return Level::class;
 	}
 
-	public function createChild(Department $parent, $childData) {
+	public function createChild(Level $parent, $childData) {
 		return $parent->children()->create($childData);
 	}
 
 	public function tree() {
-		$department = $this->skipPresenter()->get(['id', 'parent_id', 'name', 'lft', 'rgt']);
-		return $department->toTree();
+		$level = $this->skipPresenter()->get(['id', 'parent_id', 'name', 'lft', 'rgt']);
+		return $level->toTree();
 
 	}
 }

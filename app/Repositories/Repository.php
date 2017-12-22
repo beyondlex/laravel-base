@@ -11,6 +11,7 @@ namespace App\Repositories;
 
 use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Events\RepositoryEntityUpdated;
+use Prettus\Repository\Presenter\ModelFractalPresenter;
 use Prettus\Validator\Contracts\ValidatorInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -78,5 +79,10 @@ abstract class Repository extends BaseRepository
 		event(new RepositoryEntityUpdated($this, $model));
 
 		return $this->parserResult($model);
+	}
+
+	function presenter()
+	{
+		return ModelFractalPresenter::class;
 	}
 }

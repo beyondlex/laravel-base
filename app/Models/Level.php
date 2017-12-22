@@ -4,34 +4,35 @@ namespace App\Models;
 
 use Kalnoy\Nestedset\NodeTrait;
 
-class Department extends BaseModel
+class Level extends BaseModel
 {
     //
 	use NodeTrait;
 
 	protected $fillable = [
-		'name', 'parent_id', 'company_id',
+		'name', 'company_id', 'parent_id', 'readonly',
 	];
-
 
 	function getLftName()
 	{
 		return 'lft';
 	}
+
 	function getRgtName()
 	{
 		return 'rgt';
 	}
 
-	/**
-	 * @return array
-	 */
-	public function transform()
+	function transform()
 	{
 		return [
-			'name'=>$this->name,
-			'parent_id'=>$this->parent_id,
+			'id'=>$this->id,
 			'company_id'=>$this->company_id,
+			'parent_id'=>$this->parent_id,
+			'name'=>$this->name,
+			'readonly'=>$this->readonly,
+
 		];
 	}
+
 }

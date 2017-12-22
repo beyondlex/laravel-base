@@ -1,5 +1,10 @@
 <?php
-
+/**
+ * Created by PhpStorm.
+ * User: lex
+ * Date: 2017/12/22
+ * Time: 下午2:20
+ */
 namespace App\Models;
 
 use App\Database\Traits\UuidForKey;
@@ -9,24 +14,22 @@ use Prettus\Repository\Contracts\Presentable;
 use Prettus\Repository\Contracts\Transformable;
 use Prettus\Repository\Traits\PresentableTrait;
 
-class Company extends BaseModel
-{
-    //
+class BaseModel extends Model implements Transformable , Presentable {
 
-	protected $fillable = [
-		'name', 'code'
-	];
+
+	use UuidForKey;
+	use PresentableTrait;
+	use SoftDeletes;
 
 	/**
 	 * @return array
 	 */
 	public function transform()
 	{
+		// TODO: Implement transform() method.
 		return [
-			'id'=>$this->id,
-			'name'=>$this->name,
-			'code'=>$this->code,
-
+			'id'=>$this->getKey(),
 		];
+
 	}
 }
