@@ -18,7 +18,7 @@ class CompanyController extends Controller
 	}
 
 	function all() {
-		return $this->company->all();
+		return $this->company->paginate($this->request->get('perPage'));
 	}
 	function create() {
 		return $this->company->create($this->request->all());

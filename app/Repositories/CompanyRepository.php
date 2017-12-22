@@ -10,10 +10,10 @@ namespace App\Repositories;
 
 
 use App\Company;
+use Prettus\Repository\Presenter\ModelFractalPresenter;
 
 class CompanyRepository extends Repository
 {
-
 	/**
 	 * Specify Model class name
 	 *
@@ -22,5 +22,10 @@ class CompanyRepository extends Repository
 	public function model()
 	{
 		return Company::class;
+	}
+
+	public function presenter()
+	{
+		return ModelFractalPresenter::class;
 	}
 }

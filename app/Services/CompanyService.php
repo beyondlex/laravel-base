@@ -24,6 +24,12 @@ class CompanyService
 		return $this->company->all();
 	}
 
+	function paginate($perPage) {
+		$perPage = $perPage ?? 5;
+		$data = $this->company->paginate($perPage);
+		return $data;
+	}
+
 	function find($id) {
 		return $this->company->find($id);
 	}
