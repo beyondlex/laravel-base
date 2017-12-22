@@ -18,6 +18,7 @@ use App\Http\Controllers\FaceController;
 use App\Http\Controllers\LevelController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SignInController;
+use App\Http\Controllers\StaffController;
 use Illuminate\Support\Facades\Log;
 
 Route::get('/', function () {
@@ -85,6 +86,13 @@ $api->version('v1', function ($api) {
 		$api->get('roles/{id}', RoleController::class.'@find');
 		$api->put('roles/{id}', RoleController::class.'@update');
 		$api->delete('roles/{id}', RoleController::class.'@delete');
+
+		//staff
+		$api->post('staff', StaffController::class.'@create');
+		$api->get('staff', StaffController::class.'@all');
+		$api->get('staff/{id}', StaffController::class.'@find');
+		$api->put('staff/{id}', StaffController::class.'@update');
+		$api->delete('staff/{id}', StaffController::class.'@delete');
 
 
 
