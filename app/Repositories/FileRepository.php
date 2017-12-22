@@ -8,7 +8,7 @@
 
 namespace App\Repositories;
 
-use App\Files;
+use App\Models\Files;
 
 class FileRepository extends Repository {
 

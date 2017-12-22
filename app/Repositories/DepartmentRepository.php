@@ -9,7 +9,7 @@
 namespace App\Repositories;
 
 
-use App\Department;
+use App\Models\Department;
 use Prettus\Repository\Presenter\ModelFractalPresenter;
 
 class DepartmentRepository extends Repository

@@ -8,7 +8,7 @@
 
 namespace App\Extensions;
 
-use App\Monolog;
+use App\Models\Monolog;
 use Monolog\Handler\AbstractProcessingHandler;
 use Monolog\Logger;
 

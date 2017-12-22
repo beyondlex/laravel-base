@@ -10,7 +10,7 @@ namespace App\Repositories;
 
 
 use App\Criterias\RequestCriteria;
-use App\Monolog;
+use App\Models\Monolog;
 use Prettus\Repository\Presenter\ModelFractalPresenter;
 
 class MonologRepository extends Repository

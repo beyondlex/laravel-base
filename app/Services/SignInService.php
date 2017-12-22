@@ -11,7 +11,7 @@ namespace App\Services;
 use App\Criterias\ClientCriteria;
 use App\Exceptions\Traits\ClientTrait;
 use App\Repositories\SignInRepository;
-use App\SignIn;
+use App\Models\SignIn;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class SignInService

@@ -9,7 +9,7 @@
 namespace App\Repositories;
 
 
-use App\Ads;
+use App\Models\Ads;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Prettus\Repository\Presenter\ModelFractalPresenter;
 

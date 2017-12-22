@@ -8,10 +8,10 @@
 namespace App\Services;
 
 
-use App\Ads;
+use App\Models\Ads;
 use App\Criterias\ClientCriteria;
 use App\Exceptions\Traits\ClientTrait;
-use App\Files;
+use App\Models\Files;
 use App\Repositories\AdRepository;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 

@@ -1,36 +1,24 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use App\Database\Traits\UuidForKey;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Kalnoy\Nestedset\NodeTrait;
 use Prettus\Repository\Contracts\Presentable;
 use Prettus\Repository\Contracts\Transformable;
 use Prettus\Repository\Traits\PresentableTrait;
 
-class Department extends Model implements Transformable, Presentable
+class Company extends Model implements Transformable, Presentable
 {
     //
-	use NodeTrait;
 	use UuidForKey;
-	use PresentableTrait;
 	use SoftDeletes;
+	use PresentableTrait;
 
 	protected $fillable = [
-		'name', 'parent_id', 'company_id',
+		'name', 'code'
 	];
-
-
-	function getLftName()
-	{
-		return 'lft';
-	}
-	function getRgtName()
-	{
-		return 'rgt';
-	}
 
 	/**
 	 * @return array
@@ -38,9 +26,10 @@ class Department extends Model implements Transformable, Presentable
 	public function transform()
 	{
 		return [
+			'id'=>$this->id,
 			'name'=>$this->name,
-			'parent_id'=>$this->parent_id,
-			'company_id'=>$this->company_id,
+			'code'=>$this->code,
+
 		];
 	}
 }

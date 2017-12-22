@@ -8,7 +8,7 @@
 
 namespace App\Repositories;
 
-use App\SignIn;
+use App\Models\SignIn;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Prettus\Repository\Presenter\ModelFractalPresenter;
 

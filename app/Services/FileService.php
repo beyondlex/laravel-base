@@ -7,7 +7,7 @@
  */
 namespace App\Services;
 
-use App\Files;
+use App\Models\Files;
 use App\Repositories\FileRepository;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;

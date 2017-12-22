@@ -1,11 +1,11 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
+use App\Models\Files;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Prettus\Repository\Contracts\Presentable;
-use Prettus\Repository\Contracts\PresenterInterface;
 use Prettus\Repository\Contracts\Transformable;
 use Prettus\Repository\Traits\PresentableTrait;
 

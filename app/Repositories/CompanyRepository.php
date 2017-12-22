@@ -9,7 +9,7 @@
 namespace App\Repositories;
 
 
-use App\Company;
+use App\Models\Company;
 use Prettus\Repository\Presenter\ModelFractalPresenter;
 
 class CompanyRepository extends Repository
