@@ -19,10 +19,13 @@ class StaffService
 
 	private $repository;
 	private $profile;
-	public function __construct(StaffRepository $repository, ProfileService $profile)
+	private $fileService;
+	public function __construct(StaffRepository $repository,
+								ProfileService $profile, FileService $fileService)
 	{
 		$this->repository = $repository;
 		$this->profile = $profile;
+		$this->fileService = $fileService;
 	}
 
 	function all() {
@@ -48,6 +51,12 @@ class StaffService
 
 		if ($staff) {
 			$data['staff_id'] = $staff->id;
+
+			$avatar = $this->fileService->store('avatar', 'public', 'avatar');
+			if ($avatar) {
+				$data['avatar'] = $avatar->url;
+			}
+
 			$profile = $this->profile->create($data);
 			if ($profile) {
 				return $staff->presenter();

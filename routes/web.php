@@ -25,6 +25,17 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('info', function () {
+	return phpinfo();
+});
+
+Route::get('img', function() {
+	$img = \Intervention\Image\Facades\Image::make('http://coolato:8080/storage/ads/0qbllw9BzZfZHynom11VjoKEEToyPnBBsTTbdfEr.jpeg');
+	$img->resize(200, null, function ($constraint) {
+		$constraint->aspectRatio();
+	});
+	return $img->response('jpeg');
+});
 
 /** @var \Dingo\Api\Routing\Router $api */
 $api = app('Dingo\Api\Routing\Router');

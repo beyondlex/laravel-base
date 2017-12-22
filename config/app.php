@@ -181,7 +181,7 @@ return [
         \Jenssegers\Mongodb\MongodbServiceProvider::class,
         \Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
 
-//		\Baum\Providers\BaumServiceProvider::class,
+		\Intervention\Image\ImageServiceProvider::class,
 
     ],
 
@@ -216,6 +216,7 @@ return [
         'Hash' => Illuminate\Support\Facades\Hash::class,
         'Lang' => Illuminate\Support\Facades\Lang::class,
         'Log' => Illuminate\Support\Facades\Log::class,
+		'Image' => \Intervention\Image\Facades\Image::class,
         'Mail' => Illuminate\Support\Facades\Mail::class,
         'Notification' => Illuminate\Support\Facades\Notification::class,
         'Password' => Illuminate\Support\Facades\Password::class,

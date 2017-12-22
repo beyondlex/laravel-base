@@ -3,8 +3,12 @@
 namespace App\Models;
 
 
+
+use App\Extensions\Traits\ImageTrait;
+
 class Staff extends BaseModel
 {
+	use ImageTrait;
     //
 	protected $fillable = [
 		'department_id', 'company_id', 'role_id',
@@ -27,6 +31,8 @@ class Staff extends BaseModel
 			'email'=>$this->email,
 			'last_login'=>$this->last_login,
 			'name'=>$this->profile->name,
+			'avatar'=>$this->profile->avatar ? $this->originalUrl($this->profile->avatar) : '',
+			'avatar_s'=>$this->profile->avatar ? $this->thumbUrl($this->profile->avatar) : '',
 		];
 	}
 }

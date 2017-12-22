@@ -23,7 +23,7 @@ class StaffController extends Controller
 	function create() {
 
 		$data = $this->request->only([
-			'name', 'company_id', 'phone', 'password'
+			'name', 'company_id', 'phone', 'password', 'avatar',
 		]);
 
 		return $this->service->create($data);

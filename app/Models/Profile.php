@@ -7,7 +7,7 @@ class Profile extends BaseModel
 {
     //
 	protected $fillable = [
-		'staff_id', 'name',
+		'staff_id', 'name', 'avatar',
 	];
 
 	function transform()

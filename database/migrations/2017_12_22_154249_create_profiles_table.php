@@ -23,7 +23,6 @@ class CreateProfilesTable extends Migration
 			$table->string('address', 255)->nullable();
 			$table->string('remark', 255)->nullable();
 			$table->string('avatar', 255)->nullable();
-			$table->string('avatar_s', 255)->nullable();
 			$table->boolean('visible')->default(1);
 
 			$table->softDeletes();

@@ -47,7 +47,7 @@ class AdService {
     function create($data) {
         /** @var Files $file */
 //        $file = factory(Files::class)->create();
-		$file = $this->fileService->store('ads');// Storing to directory: public/ads
+		$file = $this->fileService->store('ad');// Storing to directory: public/ads
         $ad = new Ads();
 //        $ad->client_id = 1;
 		$ad->client_id = $this->getClientId();
