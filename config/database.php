@@ -54,6 +54,40 @@ return [
             'engine' => null,
         ],
 
+		'curato_base' => [
+            'driver' => 'mysql',
+            'host' => env('CURATO_BASE_DB_HOST', '127.0.0.1'),
+            'port' => env('CURATO_BASE_DB_PORT', '3306'),
+            'database' => env('CURATO_BASE_DB_DATABASE', 'forge'),
+            'username' => env('CURATO_BASE_DB_USERNAME', 'forge'),
+            'password' => env('CURATO_BASE_DB_PASSWORD', ''),
+            'unix_socket' => env('CURATO_BASE_DB_SOCKET', ''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'strict' => true,
+            'engine' => null,
+        ],
+
+		'curato_n' => [
+            'driver' => 'mysql',
+            'host' => env('CURATO_BASE_DB_HOST', '127.0.0.1'),
+            'port' => env('CURATO_BASE_DB_PORT', '3306'),
+            'database' => env('CURATO_BASE_DB_DATABASE', 'forge'),
+            'username' => env('CURATO_BASE_DB_USERNAME', 'forge'),
+            'password' => env('CURATO_BASE_DB_PASSWORD', ''),
+            'unix_socket' => env('CURATO_BASE_DB_SOCKET', ''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'strict' => true,
+            'engine' => null,
+        ],
+
+
+
+
+
         'pgsql' => [
             'driver' => 'pgsql',
             'host' => env('DB_HOST', '127.0.0.1'),
