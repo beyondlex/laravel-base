@@ -14,6 +14,14 @@ use Prettus\Repository\Contracts\Presentable;
 use Prettus\Repository\Contracts\Transformable;
 use Prettus\Repository\Traits\PresentableTrait;
 
+/**
+ * Class BaseModel
+ * @package App\Models
+ *
+ * @property mixed deleted_at
+ * @property mixed updated_at
+ * @property mixed created_at
+ */
 class BaseModel extends Model implements Transformable , Presentable {
 
 

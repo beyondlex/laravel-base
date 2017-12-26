@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Models\Company;
 use App\Models\Department;
 use App\Models\Level;
+use App\Models\Manager;
 use App\Models\Profile;
 use App\Models\Role;
 use App\Models\Staff;
@@ -23,7 +24,7 @@ class Migrate extends Command
      *
      * @var string
      */
-    protected $signature = 'db:migrate {name} {--from=} {--to=}';
+    protected $signature = 'db:migrate {name} {--from=} {--to=} {--updateOnly}';
 
     /**
      * The console command description.
@@ -31,6 +32,8 @@ class Migrate extends Command
      * @var string
      */
     protected $description = 'Command description';
+
+    protected $updateOnly = false;
 
     /**
      * Create a new command instance.
@@ -55,7 +58,7 @@ class Migrate extends Command
 		$this->info(date('Y-m-d H:i:s'));
 
 		$base = [
-			'company', 'level',
+			'company', 'level', 'manager',
 		];
 		$sub = [
 			'staff', 'department', 'role',
@@ -66,8 +69,7 @@ class Migrate extends Command
 		} else {
 			if (in_array($name, $base)) {
 
-			}
-			elseif (in_array($name, $sub)) {
+			} elseif (in_array($name, $sub)) {
 				if (!$this->option('from')) {
 					$this->error('start index of database can not be null');
 					exit;
@@ -79,6 +81,10 @@ class Migrate extends Command
 			} else {
 				$this->error('invalid name');
 				exit;
+			}
+
+			if ($this->option('updateOnly')) {
+				$this->updateOnly = true;
 			}
 
 			$this->{$name}($this->option('from'), $this->option('to'));
@@ -96,6 +102,11 @@ class Migrate extends Command
 	function level() {
 		$this->levelCreate();
 		$this->levelUpdate();
+	}
+
+	function manager() {
+    	$this->managerCreate();
+    	$this->managerUpdate();
 	}
 
 	function department($from, $to) {
@@ -126,25 +137,27 @@ class Migrate extends Command
 		$conn = $this->getMdbConn('department');
 		$conn->truncate();
 	}
+	protected function unManager() {
+		DB::statement('truncate table managers');
+		$conn = $this->getMdbConn('manager');
+		$conn->truncate();
+	}
 
 	protected function unCompany() {
 		DB::statement('truncate table companies');
 		$conn = $this->getMdbConn('company');
 		$conn->truncate();
 	}
-
 	protected function unLevel() {
 		DB::statement('truncate table levels');
 		$conn = $this->getMdbConn('level');
 		$conn->truncate();
 	}
-
 	protected function unRole() {
 		DB::statement('truncate table roles');
 		$conn = $this->getMdbConn('role');
 		$conn->truncate();
 	}
-
 	protected function unStaff() {
 		DB::statement('truncate table staff');
 		DB::statement('truncate table profiles');
@@ -152,8 +165,59 @@ class Migrate extends Command
 		$conn->truncate();
 	}
 
+	protected function managerCreate() {
+    	if ($this->updateOnly) return;
+    	$sql = "select * from t_admin_user where deleted=0 and status=1 and user_group not in (1, 6) ";
+    	$managers = $this->getBaseConn()->select($sql);
+		$mdb = $this->getMdbConn('manager');
+		foreach ($managers as $manager) {
+			$m = new Manager();
+			$m->username = $manager->username;
+			$m->password = $manager->password;
+			$m->company_id = $manager->company_id;
+			$m->name = $manager->truename;
+			$m->telephone = $manager->telephone;
+			$m->email = $manager->email;
+			$m->avatar = $manager->head_photo;
+			$m->remark = $manager->note;
+			if ($manager->last_login_time && $this->validateDate(null, $manager->last_login_time)) {
+				$m->last_login = $manager->last_login_time;
+			}
+			$m->wizarded = $manager->wizarded;
+			if ($manager->add_time && $this->validateDate(null, $manager->add_time)) {
+				$m->created_at = $manager->add_time;
+			}
+			try {
+				if ($m->save()) {
+					$mdb->insert([
+						'old'=>'manager.'.$manager->id,
+						'new'=>$m->id,
+					]);
+				}
+			} catch (\Exception $e) {
+				Log::error('insert manager error', [$e->getMessage()]);
+			}
+		}
+	}
+	protected function managerUpdate() {
+    	Manager::chunk(100, function($managers) {
+    		/** @var Manager $manager */
+			foreach ($managers as $manager) {
+
+				$key = "company.{$manager->company_id}";
+				$mdb  = $this->getMdbConn('company');
+				$map = $mdb->where('old', '=', $key)->first();
+
+				if ($map['new']) $manager->company_id = $map['new'];
+
+				$manager->save();
+			}
+		});
+	}
+
 
 	protected function staffCreate($from, $to) {
+		if ($this->updateOnly) return;
 		$mdb = $this->getMdbConn('staff');
 
 		$conn = $this->getBaseConn();
@@ -226,7 +290,6 @@ class Migrate extends Command
 
 		}
 	}
-
 	protected function staffUpdate() {
     	//update department_id, role_id, company_id
     	Staff::chunk(100, function($staff) {
@@ -257,8 +320,8 @@ class Migrate extends Command
 		});
 	}
 
-
 	protected function departmentCreate($from, $to) {
+		if ($this->updateOnly) return;
     	$mdb = $this->getMdbConn('department');
 
     	$conn = $this->getBaseConn();
@@ -315,7 +378,6 @@ class Migrate extends Command
 
 		}
 	}
-
 	protected function departmentUpdate() {
 
     	//update parent_id and company_id and lft and rgt
@@ -362,7 +424,6 @@ class Migrate extends Command
 			}
 		});
 	}
-
 	protected function companyCreate() {
 		$companies = $this->getBaseConn()->select('select * from t_company');
 		$oldPrimaryKeyCompany = 'company.';
@@ -430,6 +491,7 @@ class Migrate extends Command
 	}
 
 	protected function levelCreate() {
+		if ($this->updateOnly) return;
 		$levels = $this->getBaseConn()->select('select * from t_level where deleted=0');
 
 		$mdb = $this->getMdbConn('level');
@@ -461,7 +523,6 @@ class Migrate extends Command
 
 		}
 	}
-
 	protected function levelUpdate() {
     	//update parent_id , company_id
 		Level::chunk(100, function($levels) {
@@ -485,6 +546,7 @@ class Migrate extends Command
 	}
 
 	protected function roleCreate($from, $to) {
+		if ($this->updateOnly) return;
 
 		$mdb = $this->getMdbConn('role');
 		$conn = $this->getBaseConn();
@@ -532,7 +594,6 @@ class Migrate extends Command
 			}
 		}
 	}
-
 	protected function roleUpdate() {
 
     	Role::chunk(100, function($roles) {
