@@ -3,6 +3,14 @@
 namespace App\Models;
 
 
+/**
+ * @property mixed id
+ * @property mixed name
+ * @property mixed company_id
+ * @property mixed level_id
+ * @property false|string created_at
+ * @property false|string deleted_at
+ */
 class Role extends BaseModel
 {
     //

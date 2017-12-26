@@ -19,7 +19,7 @@ class CreateStaffTable extends Migration
 			$table->string('department_id', 36)->nullable();
             $table->string('role_id', 36)->nullable();
             $table->string('phone', 20)->unique();
-            $table->string('email', 50)->nullable()->unique();
+            $table->string('email', 50)->nullable();
             $table->string('password', 64);
             $table->string('confirm_password', 64)->nullable();
             $table->boolean('status')->default(1);

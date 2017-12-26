@@ -3,6 +3,18 @@
 namespace App\Models;
 
 
+/**
+ * @property mixed id
+ * @property mixed staff_id
+ * @property mixed name
+ * @property mixed gender
+ * @property mixed telephone
+ * @property mixed telephone_ext
+ * @property mixed address
+ * @property mixed remark
+ * @property mixed avatar
+ * @property mixed visible
+ */
 class Profile extends BaseModel
 {
     //

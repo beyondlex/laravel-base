@@ -4,6 +4,14 @@ namespace App\Models;
 
 use Kalnoy\Nestedset\NodeTrait;
 
+/**
+ * @property mixed name
+ * @property mixed parent_id
+ * @property mixed company_id
+ * @property mixed created_at
+ * @property mixed deleted_at
+ * @property mixed id
+ */
 class Department extends BaseModel
 {
     //

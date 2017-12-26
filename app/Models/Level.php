@@ -4,10 +4,19 @@ namespace App\Models;
 
 use Kalnoy\Nestedset\NodeTrait;
 
+/**
+ * @property mixed id
+ * @property mixed company_id
+ * @property mixed parent_id
+ * @property mixed name
+ * @property mixed readonly
+ * @property false|string deleted_at
+ * @property mixed sort
+ */
 class Level extends BaseModel
 {
     //
-	use NodeTrait;
+//	use NodeTrait;
 
 	protected $fillable = [
 		'name', 'company_id', 'parent_id', 'readonly',
