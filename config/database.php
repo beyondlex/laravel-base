@@ -114,11 +114,11 @@ return [
 
         'mongodb'=> [
             'driver'=>'mongodb',
-            'host' => '127.0.0.1',
+            'host' => env('MONGODB_HOST', 'localhost'),
             'port' => 27017,
             'username' => '',
             'password' => '',
-            'database' => 'test',
+            'database' => env('MONGODB_DATABASE', 'test'),
         ]
 
     ],

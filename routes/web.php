@@ -120,21 +120,22 @@ $api->version('v1', function ($api) {
 //Route::delete('/api/ads/{id}', 'AdController@delete');//删除
 
 Route::get('log', function (\Faker\Generator $faker) {
-	//    $mongodb = \Illuminate\Support\Facades\DB::connection('mongodb');
-	//    $db = $mongodb->collection('products');
-	//    $db->insert([
-	//        'name'=>'Robot 3178',
-	//        'power'=>13098,
-	//        'age'=>384,
-	//        'birth_day'=>'2099-01-09',
-	//    ]);
-	//    dd($db->get());
+//	    $mongodb = \Illuminate\Support\Facades\DB::connection('mongodb');
+//	    dd($mongodb->collection('monologs')->get());
+//	    $db = $mongodb->collection('products');
+//	    $db->insert([
+//	        'name'=>'Robot 3178',
+//	        'power'=>13098,
+//	        'age'=>384,
+//	        'birth_day'=>'2099-01-09',
+//	    ]);
+//	    dd($db->get());
 
 	//    $log = new \App\Monolog();
 	//    $log->name = 'Robot 31';
 	//    $log->save();
 
 	//    var_dump(app('request')->get('hi'));
-	Log::notice($faker->name(), ['name'=>$faker->name()]);
+//	Log::notice($faker->name(), ['name'=>$faker->name()]);
 
 });
