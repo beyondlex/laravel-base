@@ -28,5 +28,10 @@ class AuthServiceProvider extends ServiceProvider
 
         //
         Passport::routes();
+        Passport::tokensCan([
+        	'user-profile'=>'Get user profile.',
+			'department-manage'=>'Manage department.'
+		]);
+        Passport::enableImplicitGrant();
     }
 }
