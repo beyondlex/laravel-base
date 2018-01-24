@@ -19,8 +19,10 @@ use App\Http\Controllers\LevelController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SignInController;
 use App\Http\Controllers\StaffController;
+use App\Mail\CommonMail;
 use App\Models\Category;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 Route::get('/', function () {
     return view('welcome');
@@ -28,6 +30,13 @@ Route::get('/', function () {
 
 Route::get('info', function () {
 	return phpinfo();
+});
+
+Route::get('mail', function () {
+	$body = "what life will \n be like 在未来";
+	$to = 'beyondsnk@163.com';
+	$subject = 'test';
+	Mail::to($to)->send((new CommonMail($body))->subject($subject));
 });
 
 Route::get('cat', function() {
