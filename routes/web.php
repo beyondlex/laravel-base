@@ -40,6 +40,13 @@ Route::get('mail', function () {
 	Mail::to($to)->send((new CommonMail($body))->subject($subject));
 });
 
+Route::get('mail/send', function() {
+	$body = "what life will \n be like 在未来";
+	$to = 'beyondsnk@163.com';
+	$subject = 'test';
+	Mail::to($to)->queue((new CommonMail($body))->subject($subject));
+});
+
 Route::get('queue', function() {
 	dispatch(new TestJob());
 });
