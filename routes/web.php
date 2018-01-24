@@ -19,6 +19,7 @@ use App\Http\Controllers\LevelController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SignInController;
 use App\Http\Controllers\StaffController;
+use App\Models\Category;
 use Illuminate\Support\Facades\Log;
 
 Route::get('/', function () {
@@ -29,6 +30,35 @@ Route::get('info', function () {
 	return phpinfo();
 });
 
+Route::get('cat', function() {
+	return Category::defaultOrder()->get()->toTree();
+	$node = Category::where('name','=','root1-3')->first();
+	$parent = Category::where('name','=','root1-2')->first();
+	$parent->prependNode($node);
+	return 'hi';
+	Category::create([
+		'name'=>'root1',
+		'children'=> [
+			[
+				'name'=>'root1-1',
+			],
+			[
+				'name'=>'root1-2',
+				'children'=> [
+					[
+						'name'=>'1-2-1',
+					],
+					[
+						'name'=>'1-2-2',
+					]
+				]
+			],
+			[
+				'name'=>'root1-3',
+			]
+		]
+	]);
+});
 Route::get('img', function() {
 	$img = \Intervention\Image\Facades\Image::make('http://coolato:8080/storage/ads/0qbllw9BzZfZHynom11VjoKEEToyPnBBsTTbdfEr.jpeg');
 	$img->resize(200, null, function ($constraint) {
@@ -118,7 +148,37 @@ $api->version('v1', function ($api) {
 //Route::post('/api/ads', 'AdController@create');//新增
 //Route::put('/api/ads/{id}', 'AdController@update');//更新
 //Route::delete('/api/ads/{id}', 'AdController@delete');//删除
+Route::get('mongo', function () {
+//	$model = new Category();
+//	$model->name = 'cate1';
+//	$model->depth = 0;
+//	$model->path = null;
+//	$model->save();
+//	$cate = Category::find('5a4f272190c47a020713afb8');
+//	$id = $cate->createSub('cate111');
+//	dd($id);
 
+//	$tree = Category::get()->toTree();
+//	return $tree;
+
+//	Category::create([
+//		'name'=>'hi'
+//	]);
+//	exit();
+
+	/** @var Category $cat */
+//	$cat = Category::where('name', 'hi')->first();
+//	$sub = new Category();
+//	$sub->name = 'hi2';
+//	$cat->appendNode($sub);
+//	$cat->children()->create(['name'=>'hichildren']);
+//	$cat->saveAsRoot();
+//	$sub = new Category();
+//	$sub->name = 'world';
+//
+//	$cat->appendNode($sub);
+
+});
 Route::get('log', function (\Faker\Generator $faker) {
 //	    $mongodb = \Illuminate\Support\Facades\DB::connection('mongodb');
 //	    dd($mongodb->collection('monologs')->get());
