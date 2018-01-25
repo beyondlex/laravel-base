@@ -16,6 +16,7 @@ use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\FaceController;
 use App\Http\Controllers\LevelController;
+use App\Http\Controllers\MsgController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SignInController;
 use App\Http\Controllers\StaffController;
@@ -40,12 +41,6 @@ Route::get('mail', function () {
 	Mail::to($to)->send((new CommonMail($body))->subject($subject));
 });
 
-Route::get('mail/send', function() {
-	$body = "what life will \n be like 在未来";
-	$to = 'beyondsnk@163.com';
-	$subject = 'test';
-	Mail::to($to)->queue((new CommonMail($body))->subject($subject));
-});
 
 Route::get('queue', function() {
 	dispatch(new TestJob());
@@ -93,10 +88,16 @@ $api = app('Dingo\Api\Routing\Router');
 
 $api->version('v1', function ($api) {
 
-    /** @var \Dingo\Api\Routing\Router $api */
+
+
+	/** @var \Dingo\Api\Routing\Router $api */
 
     $api->group(['prefix'=>'api'], function () use ($api) {
-        $api->group(['prefix'=>'logs'], function() use ($api) {
+
+		$api->post('mail', MsgController::class. '@sendMail');
+
+
+		$api->group(['prefix'=>'logs'], function() use ($api) {
             $api->get('/', \App\Http\Controllers\MonologController::class.'@getAll');
         });
 
