@@ -57,12 +57,14 @@ class SendMail extends Command
 			$mail = $userId;
 		}
 
+		$body = 'hello';
+
 		if ($this->confirm("Email will send to {$mail}. continue? [y|N]")) {
 			$shouldQueue = $this->option('queue');
 			if ($shouldQueue) {
-				\Mail::to($mail)->queue(new CommonMail());
+				\Mail::to($mail)->queue(new CommonMail($body));
 			} else {
-				\Mail::to($mail)->send(new CommonMail());
+				\Mail::to($mail)->send(new CommonMail($body));
 			}
 		}
     }

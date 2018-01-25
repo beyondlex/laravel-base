@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\CommonMail;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
@@ -33,8 +34,15 @@ class MsgController extends Controller
 
 //		return $subject;
 
-		Mail::to($to)->queue((new CommonMail($body))->subject($subject));
+		try {
+			Mail::to($to)->send((new CommonMail($body))->subject($subject));
 
+		} catch (\Swift_SwiftException $e) {
+			throw $e;
+			return new JsonResponse('email server error.', 500);
+		}
 
+//		Mail::to($to)->queue((new CommonMail($body))->subject($subject));
+		return response('ok', 200);
 	}
 }
