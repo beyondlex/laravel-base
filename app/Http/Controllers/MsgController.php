@@ -31,7 +31,7 @@ class MsgController extends Controller
 
 		$this->validate($this->request, $rules);
 
-		return $subject;
+//		return $subject;
 
 		Mail::to($to)->queue((new CommonMail($body))->subject($subject));
 
