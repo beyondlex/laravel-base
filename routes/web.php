@@ -34,6 +34,24 @@ Route::get('info', function () {
 	return phpinfo();
 });
 
+Route::get('mosquitto', function() {
+	$c = new Mosquitto\Client;
+	$reflection = new ReflectionClass(\Mosquitto\Client::class);
+//	var_dump($reflection->getMethods());
+	var_dump($reflection->getMethod('setWill')->__toString());
+	exit;
+	$c->onConnect(function() use ($c) {
+		$c->publish('somebody_crying', 'a dog is crying', 0);
+		$c->subscribe('somebody_laughing', 0);
+		$c->disconnect();
+	});
+
+	$c->connect('127.0.0.1');
+	$c->loopForever();
+
+	echo "Finished\n";
+});
+
 Route::get('mail', function () {
 	$body = "what life will \n be like 在未来";
 	$to = 'beyondsnk@163.com';
