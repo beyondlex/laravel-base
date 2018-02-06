@@ -40,6 +40,8 @@ class MosquittoSub extends Command
     {
         //
 		$serverIp = '127.0.0.1';
+		$username = '';
+		$password = '';
 		$topic = $this->argument('topic');
 		$qos = $this->argument('qos');
 		$client  = new Client();
@@ -56,6 +58,9 @@ class MosquittoSub extends Command
 
 		$client->setWill('Somebody died.', 'Good bye ... ', 0, false);
 
+		if ($username and $password) {
+			$client->setCredentials($username, $password);
+		}
 		$client->connect($serverIp);
 		$client->subscribe($topic, $qos);
 		$client->loopForever();
